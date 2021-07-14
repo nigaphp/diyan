@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of the Nigatedev PHP framework core Application
+ * This file is part of the Nigatedev PHP framework package
  * 
  *  (c) Abass Ben Cheik <abass@todaysdev.com>
  */
