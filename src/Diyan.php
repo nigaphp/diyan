@@ -22,10 +22,10 @@ class Diyan
    */
   public function render($view) 
   {
-    $baseLayout =  $this->getBaseLayout();
-    $viewContent =  $this->getViewContent($view);
+    $getView =  $this->getView($view);
+    $getBaseView =  $this->getBaseView();
     
-    return str_replace(["{{content}}", "{{title}}"], [$viewContent, strtoupper($view)], $baseLayout);
+    return str_replace(["{{content}}", "{{title}}"], [$getView, $view], $getBaseView);
   }
   
   /**
