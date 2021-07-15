@@ -31,11 +31,11 @@ class Diyan
   /**
    * @return base template 
    */
-  public function getBaseLayout()
+  public function getView($view) 
   {
-    ob_start();
-    require_once "../views/layouts/base.php";
-    return ob_get_clean();
+     ob_start();
+     require_once "../views/$view.php";
+     return ob_get_clean();
   }
   
   /**
@@ -43,11 +43,11 @@ class Diyan
    *
    * @return only view content
    */
-  public function getViewContent($view)
-  {
-    ob_start();
-    require_once "../views/$view.php";
-    return ob_get_clean();
-  }
+  public function getBaseView()
+   {
+     ob_start();
+     require_once "../views/base.php";
+     return ob_get_clean();
+   }
   
 }
