@@ -3,6 +3,7 @@
     "description": "The Nigatedev PHP framework template engine",
     "type": "library",
     "license": "MIT",
+    "keywords": ["framework", "nigatedev", "diyan"],
     "autoload": {
         "psr-4": {
             "Nigatedev\\Diyan\\": "src/"
