@@ -16,7 +16,7 @@ namespace Nigatedev\Diyan;
 class Diyan
 {
   /**
-   * @param 
+   * @param $view from views folder
    * 
    * @return render final view
    */
@@ -29,7 +29,9 @@ class Diyan
   }
   
   /**
-   * @return base template 
+   * @param $view from the views folder
+   *
+   * @return only view content
    */
   public function getView($view) 
   {
@@ -39,9 +41,7 @@ class Diyan
   }
   
   /**
-   * @param the view giving from the Router, E.g:  Nigatedev\Core\Router::get("/", "home") method. will load path/to/views/home.php
-   *
-   * @return only view content
+   * @return base template 
    */
   public function getBaseView()
    {
