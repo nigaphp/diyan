@@ -1,85 +1,225 @@
 <?php
 /**
- * This file is part of the Nigatedev PHP framework package
- * 
- * (c) Abass Ben Cheik <abass@todaysdev.com>
- */
- 
+* This file is part of the Nigatedev PHP framework package
+*
+* (c) Abass Ben Cheik <abass@todaysdev.com>
+*/
+
 namespace Nigatedev\Diyan;
 
-use Nigatedev\Diyan\Template\NotFound;
+use Nigatedev\Diyan\DiyanNotFoundTemplate;
+use Nigatedev\Diyan\DiyanInterface;
+use Nigatedev\Core\App;
 
 /**
- * Diyan view render
- * 
- * @package Nigatedev\Diyan
- * 
- * @author Abass Ben Cheik <abass@todaysdev.com>
- */
-class Diyan extends NotFound
+* Diyan view render
+*
+* @package Nigatedev\Diyan
+*
+* @author Abass Ben Cheik <abass@todaysdev.com>
+*/
+class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
 {
+
+  /**
+  * @var string
+  */
+  private $head;
+
+  /**
+  * @var string
+  */
+  private $header;
+
+  /**
+  * @var string
+  */
+  private $body;
+
+  /**
+  * @var string
+  */
+  private $footer;
   
-    /**
-     * @param $view from views folder
-     * @param array $params 
-     * 
-     * @return render final view
-     */
+  
+  /**
+  * undocumented class variable
+  *
+  * @var string
+  */
+  private $onlyView;
+  
+  /**
+  * undocumented class variable
+  *
+  * @var string
+  */
+  private $defaultVars;
+
+  /**
+  * undocumented class variable
+  *
+  * @var string
+  */
+  private $viewTitle;
+
+  /**
+  * @var string
+  */
+  private $baseView;
+  
+  /**
+  * undocumented function
+  *
+  * @param string $head
+  */
+  public function setHead($head)
+  {
+    $this->head = $head;
+  }
+
+  /**
+  * undocumented function
+  *
+  * @param string $header
+  */
+  public function setHeader($header)
+  {
+    $this->header = $header;
+  }
+
+  /**
+  * undocumented function
+  *
+  * @param string $body
+  */
+  public function setBody($body): self
+  {
+    $this->body = $body;
+    if ($body) {
+      $this->onlyView = $body;
+    }
+
+    return $this;
+  }
+
+  /**
+  * undocumented function
+  *
+  * @param string $footer
+  */
+  public function setFooter($footer)
+  {
+    $this->footer = $footer;
+  }
+
+  /**
+  * undocumented function
+  *
+  * @return string
+  */
+  public function getHead()
+  {
+    return $this->head;
+  }
+
+  /**
+  * undocumented function
+  *
+  * @return string
+  */
+  public function getHeader()
+  {
+    return $this->header;
+  }
+
+  /**
+  * undocumented function
+  *
+  * @return string
+  */
+  public function getBody()
+  {
+    return $this->body;
+  }
+
+  /**
+  * undocumented function
+  *
+  * @return string
+  */
+  public function getFooter()
+  {
+    return $this->footer;
+  }
+  
+  /**
+  * undocumented function
+  *
+  * @return string
+  */
+  public function getDefaultVars()
+  {
+    return [
+      "title" => $this->viewTitle,
+      ];
+  }
+  
+  /**
+  * @param $view from views folder
+  * @param array $params
+  *
+  * @return render final view
+  */
     public function render($view, $params = []) 
-    {
-        $getView =  $this->getView($view, $params);
-        $getBaseView =  $this->getBaseView();
+  {
+    $this->viewTitle = $view;
     
-        return str_replace(["{{body}}", "{{title}}"], [$getView, $view], $getBaseView);
+    if (is_null($this->body)) {
+      $this->setOnlyView($view, $params);
     }
-  
-    /**
-     * @param $view from the views folder     *
-     * @param array $params 
-     * 
-     * @return only view content
-     */
-    public function getView($view, $params = []) 
-    {
-        if (is_array($params)) {
-            foreach ($params as $varName => $value) {
-                $$varName = $value;
-            }
-        }
+    $this->setBaseView("base");
     
-        ob_start();
-        include_once  "../views/$view.php";
-        return ob_get_clean();
+    $params = array_merge($this->getDefaultVars(), $params);
+    return str_replace("{{body}}", $this->getOnlyView(), $this->getBaseView());
+  }
+
+  public function getOnlyView()
+  {
+    return $this->onlyView;
+  }
+
+  public function getBaseView()
+  {
+    return $this->baseView;
+  }
+
+  /**
+  * @param $view from the views folder     *
+  * @param array $params
+  *
+  * @return only view content
+  */
+  public function setOnlyView($onlyView,  $params = []) {
+   
+    $this->onlyView = $onlyView;
+        foreach ($params as $key => $value) {
+      $$key = $value;
     }
-  
-    /**
-     * @return base template 
-     */
-    public function getBaseView()
-    {
-        ob_start();
-        include_once "../views/base.php";
-        return ob_get_clean();
-    }
-    
-    /**
-     * @return route not found title and content
-     */
-    public function notFound()
-    {
-        return [
-         "{{title}}" => "404 Not Found",
-        "{{body}}" => $this->notFoundBody()
-        ];
-    }
-    /**
-     * @return home page title and content if not route found
-     */
-    public function homeNotFound()
-    {
-        return [
-         "{{title}}" => "Home page not found",
-         "{{body}}" => $this->getHomeNotFound()
-        ];
-    }
+    ob_start();
+    require_once APP::$APP_ROOT. "/views/{$this->onlyView}.php";
+    $this->onlyView = ob_get_clean();
+  }
+
+ /**
+  * @return base template
+  */
+  public function setBaseView($baseView = "base"): self
+  {
+    $this->baseView = $baseView;
+    ob_start();
+    require_once App::$APP_ROOT . "/views/{$this->baseView}.php";
+    $this->baseView = ob_get_clean();
+    return $this;
+  }
 }
