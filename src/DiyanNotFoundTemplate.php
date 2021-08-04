@@ -8,7 +8,7 @@
 namespace Nigatedev\Diyan;
 
 /**
- * NotFound class
+ * NotFound Template
  * 
  * @package Nigatedev\Diyan;
  * 
@@ -43,7 +43,7 @@ NFB;
   <h2 class="be-color-py">Nigatedev PHP framework for saving time ⏱️</h2>
   <p class="be-color-dg">ERROR: <code>404 Not Found</code></p>
   <small>You are seeing this because
-  you haven't config a route for the Home page yet.</small>
+  you haven't config a route for the Home page yet and debug mode is enabled.</small>
 <p>You can use the following command <span class='be-code'>php bin/console make:controller HomeController</span> to create a route that point to http://localhost:8000/home for example.</p>
 </div>
 HNF;
