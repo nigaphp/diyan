@@ -45,7 +45,7 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
   /**
   * undocumented class variable
   *
-  * @var string $onlyView
+  * @var string|null $onlyView
   */
     private $onlyView;
   
@@ -59,12 +59,12 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
   /**
   * undocumented class variable
   *
-  * @var string $viewTitle
+  * @var string|null $viewTitle
   */
     private $viewTitle;
 
   /**
-  * @var string|false $baseView
+  * @var string $baseView
   */
     private $baseView;
   
@@ -162,7 +162,7 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
   /**
   * undocumented function
   *
-  * @return string[]
+  * @return array<string, string|null>
   */
     public function getDefaultVars()
     {
@@ -172,7 +172,7 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
     }
   
   /**
-  * @param string $view
+  * @param string|null $view
   * @param mixed $params
   *
   * @return mixed
@@ -191,7 +191,7 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
     }
   
   /**
-   * @return string
+   * @return string|null
    */
     public function getOnlyView()
     {
@@ -203,11 +203,11 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
    */
     public function getBaseView()
     {
-        return (string)$this->baseView;
+        return $this->baseView;
     }
 
   /**
-  * @param string $onlyView
+  * @param string|null $onlyView
   * @param mixed $params
   *
   * @return mixed
@@ -234,7 +234,7 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
         $this->baseView = $baseView;
         ob_start();
         require_once App::$APP_ROOT . "/views/{$this->baseView}.php";
-        $this->baseView = ob_get_clean();
+        $this->baseView = (string)ob_get_clean();
         return $this;
     }
 }
