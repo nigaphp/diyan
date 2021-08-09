@@ -22,204 +22,219 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
 {
 
   /**
-  * @var string
+  * @var string $head
   */
-  private $head;
+    private $head;
 
   /**
-  * @var string
+  * @var string $header
   */
-  private $header;
+    private $header;
 
   /**
-  * @var string
+  * @var string $body
   */
-  private $body;
+    private $body;
 
   /**
-  * @var string
+  * @var string $footer
   */
-  private $footer;
+    private $footer;
   
   
   /**
   * undocumented class variable
   *
-  * @var string
+  * @var string $onlyView
   */
-  private $onlyView;
+    private $onlyView;
   
   /**
   * undocumented class variable
   *
-  * @var string
+  * @var string $defaultVars
   */
-  private $defaultVars;
+    private $defaultVars;
 
   /**
   * undocumented class variable
   *
-  * @var string
+  * @var string $viewTitle
   */
-  private $viewTitle;
+    private $viewTitle;
 
   /**
-  * @var string
+  * @var string|false $baseView
   */
-  private $baseView;
+    private $baseView;
   
   /**
   * undocumented function
   *
   * @param string $head
+  *
+  * @return void
   */
-  public function setHead($head)
-  {
-    $this->head = $head;
-  }
+    public function setHead($head)
+    {
+        $this->head = $head;
+    }
 
   /**
   * undocumented function
   *
   * @param string $header
+  *
+  * @return void
   */
-  public function setHeader($header)
-  {
-    $this->header = $header;
-  }
+    public function setHeader($header)
+    {
+        $this->header = $header;
+    }
 
   /**
   * undocumented function
   *
-  * @param string $body
+  * @param mixed $body
   */
-  public function setBody($body): self
-  {
-    $this->body = $body;
-    if ($body) {
-      $this->onlyView = $body;
-    }
+    public function setBody($body): self
+    {
+        $this->body = $body;
+        if ($body) {
+            $this->onlyView = $body;
+        }
 
-    return $this;
-  }
+        return $this;
+    }
 
   /**
   * undocumented function
   *
   * @param string $footer
-  */
-  public function setFooter($footer)
-  {
-    $this->footer = $footer;
-  }
-
-  /**
-  * undocumented function
   *
-  * @return string
+  * @return void
   */
-  public function getHead()
-  {
-    return $this->head;
-  }
-
-  /**
-  * undocumented function
-  *
-  * @return string
-  */
-  public function getHeader()
-  {
-    return $this->header;
-  }
-
-  /**
-  * undocumented function
-  *
-  * @return string
-  */
-  public function getBody()
-  {
-    return $this->body;
-  }
-
-  /**
-  * undocumented function
-  *
-  * @return string
-  */
-  public function getFooter()
-  {
-    return $this->footer;
-  }
-  
-  /**
-  * undocumented function
-  *
-  * @return string
-  */
-  public function getDefaultVars()
-  {
-    return [
-      "title" => $this->viewTitle,
-      ];
-  }
-  
-  /**
-  * @param $view from views folder
-  * @param array $params
-  *
-  * @return render final view
-  */
-    public function render($view, $params = []) 
-  {
-    $this->viewTitle = $view;
-    
-    if (is_null($this->body)) {
-      $this->setOnlyView($view, $params);
+    public function setFooter($footer)
+    {
+        $this->footer = $footer;
     }
-    $this->setBaseView("base");
-    
-    $params = array_merge($this->getDefaultVars(), $params);
-    return str_replace("{{body}}", $this->getOnlyView(), $this->getBaseView());
-  }
-
-  public function getOnlyView()
-  {
-    return $this->onlyView;
-  }
-
-  public function getBaseView()
-  {
-    return $this->baseView;
-  }
 
   /**
-  * @param $view from the views folder     *
-  * @param array $params
+  * undocumented function
   *
-  * @return only view content
+  * @return string
   */
-  public function setOnlyView($onlyView,  $params = []) {
+    public function getHead()
+    {
+        return $this->head;
+    }
+
+  /**
+  * undocumented function
+  *
+  * @return string
+  */
+    public function getHeader()
+    {
+        return $this->header;
+    }
+
+  /**
+  * undocumented function
+  *
+  * @return string
+  */
+    public function getBody()
+    {
+        return $this->body;
+    }
+
+  /**
+  * undocumented function
+  *
+  * @return string
+  */
+    public function getFooter()
+    {
+        return $this->footer;
+    }
+  
+  /**
+  * undocumented function
+  *
+  * @return string[]
+  */
+    public function getDefaultVars()
+    {
+        return [
+        "title" => $this->viewTitle,
+        ];
+    }
+  
+  /**
+  * @param string $view
+  * @param mixed $params
+  *
+  * @return mixed
+  */
+    public function render($view, $params = [])
+    {
+        $this->viewTitle = $view;
+    
+        if (empty($this->body)) {
+            $this->setOnlyView($view, $params);
+        }
+        $this->setBaseView("base");
+    
+        $params = array_merge($this->getDefaultVars(), $params);
+        return str_replace("{{body}}", $this->getOnlyView(), $this->getBaseView());
+    }
+  
+  /**
+   * @return string
+   */
+    public function getOnlyView()
+    {
+        return $this->onlyView;
+    }
+  
+  /**
+   * @return string
+   */
+    public function getBaseView()
+    {
+        return (string)$this->baseView;
+    }
+
+  /**
+  * @param string $onlyView
+  * @param mixed $params
+  *
+  * @return mixed
+  */
+    public function setOnlyView($onlyView, $params = [])
+    {
    
-    $this->onlyView = $onlyView;
+        $this->onlyView = $onlyView;
         foreach ($params as $key => $value) {
-      $$key = $value;
+            $$key = $value;
+        }
+        ob_start();
+        require_once APP::$APP_ROOT. "/views/{$this->onlyView}.php";
+        $this->onlyView = (string)ob_get_clean();
     }
-    ob_start();
-    require_once APP::$APP_ROOT. "/views/{$this->onlyView}.php";
-    $this->onlyView = ob_get_clean();
-  }
 
  /**
-  * @return base template
+  * @param string $baseView
+  *
+  * @return self
   */
-  public function setBaseView($baseView = "base"): self
-  {
-    $this->baseView = $baseView;
-    ob_start();
-    require_once App::$APP_ROOT . "/views/{$this->baseView}.php";
-    $this->baseView = ob_get_clean();
-    return $this;
-  }
+    public function setBaseView($baseView = "base"): self
+    {
+        $this->baseView = $baseView;
+        ob_start();
+        require_once App::$APP_ROOT . "/views/{$this->baseView}.php";
+        $this->baseView = ob_get_clean();
+        return $this;
+    }
 }

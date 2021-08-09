@@ -1,7 +1,7 @@
 <?php
 /*
  * This file is part of the Nigatedev PHP framework package
- * 
+ *
  *  (c) Abass Ben Cheik <abass@todaysdev.com>
  */
 
@@ -9,18 +9,20 @@ namespace Nigatedev\Diyan;
 
 /**
  * NotFound Template
- * 
+ *
  * @package Nigatedev\Diyan;
- * 
+ *
  * @author Abass Ben Cheik <abass@todaysdev.com>
  */
 class DiyanNotFoundTemplate
 {
   
     /**
-     * @return route not found content / type 404 Not Found
+     * route not found content / type 404 Not Found
+     *
+     * @return string
      */
-    public function getNotFound() 
+    public function getNotFound()
     {
         $path = $_SERVER["HTTP_HOST"];
         return <<<NFB
@@ -34,7 +36,9 @@ NFB;
     
     
     /**
-     * @return home page title and content if not route found
+     * home page content if not route found
+     *
+     * @return string
      */
     public function getHomeNotFound()
     {

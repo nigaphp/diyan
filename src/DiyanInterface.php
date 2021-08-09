@@ -4,14 +4,36 @@ namespace Nigatedev\Diyan;
 
 interface DiyanInterface
 {
+  /**
+   * @param string $view
+   *
+   * @return void
+   */
+    public function render($view);
   
-   public function render($view);
-  
-   public function setBaseView($baseView);
+  /**
+   * @param string $baseView
+   *
+   * @return self
+   */
+    public function setBaseView($baseView);
    
-   public function getBaseView();
+  /**
+   * @return string
+   */
+    public function getBaseView();
    
-   public function setOnlyView($onlyView);
+  /**
+   * @param string $onlyView
+   * @param mixed $params
+   *
+   * @return mixed
+   */
+    public function setOnlyView($onlyView, $params = []);
    
-   public function getOnlyView();
+   
+  /**
+   * @return string
+   */
+    public function getOnlyView();
 }
