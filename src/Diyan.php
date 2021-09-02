@@ -9,7 +9,7 @@ namespace Nigatedev\Diyan;
 
 use Nigatedev\Diyan\DiyanNotFoundTemplate;
 use Nigatedev\Diyan\DiyanInterface;
-use Nigatedev\App;
+use Nigatedev\FrameworkBundle\Application\App;
 
 /**
 * Diyan view render
