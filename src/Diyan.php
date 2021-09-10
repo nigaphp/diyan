@@ -1,9 +1,14 @@
 <?php
-/**
-* This file is part of the Nigatedev PHP framework package
-*
-* (c) Abass Ben Cheik <abass@todaysdev.com>
-*/
+/*
+ * This file is part of the Nigatedev framework package.
+ *
+ * (c) Abass Ben Cheik <abass@todaysdev.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types = 1);
 
 namespace Nigatedev\Diyan;
 
@@ -12,9 +17,7 @@ use Nigatedev\Diyan\DiyanInterface;
 use Nigatedev\FrameworkBundle\Application\App;
 
 /**
-* Diyan view render
-*
-* @package Nigatedev\Diyan
+* Diyan template render
 *
 * @author Abass Ben Cheik <abass@todaysdev.com>
 */
@@ -22,57 +25,54 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
 {
 
   /**
-  * @var string $head
+  * @var string
   */
     private $head;
 
   /**
-  * @var string $header
+  * @var string
   */
     private $header;
 
   /**
-  * @var string $body
+  * @var string
   */
     private $body;
 
   /**
-  * @var string $footer
+  * @var string
   */
     private $footer;
   
   
   /**
-  * undocumented class variable
   *
-  * @var string|null $onlyView
+  * @var string|null
   */
     private $onlyView;
   
   /**
-  * undocumented class variable
   *
-  * @var string $defaultVars
+  * @var string
   */
     private $defaultVars;
 
-  /**
-  * undocumented class variable
+ /**
   *
-  * @var string|null $viewTitle
+  * @var string|null
   */
     private $viewTitle;
 
-  /**
-  * @var string $baseView
+ /**
+  * @var string
   */
     private $baseView;
   
-  /**
-  * undocumented function
+ /**
+  * Overwrite template head
+  *   Example the contents between the tag <head> and </head>
   *
   * @param string $head
-  *
   * @return void
   */
     public function setHead($head)
@@ -80,11 +80,13 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
         $this->head = $head;
     }
 
-  /**
-  * undocumented function
+ /**
+  *
+ /**
+  * Overwrite template header
+  *   Example the contents between the tags <header> and </header>
   *
   * @param string $header
-  *
   * @return void
   */
     public function setHeader($header)
@@ -92,10 +94,12 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
         $this->header = $header;
     }
 
-  /**
-  * undocumented function
+ /**
+  * Inject template contents
+  *   by default it overwrite {{content}} see base template for more information
   *
   * @param mixed $body
+  * @return void
   */
     public function setBody($body): self
     {
@@ -107,11 +111,11 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
         return $this;
     }
 
-  /**
-  * undocumented function
+ /**
+  * Overwrite footer contents
+  *  Example the contents between the tags <footer> and </footer>
   *
   * @param string $footer
-  *
   * @return void
   */
     public function setFooter($footer)
@@ -119,8 +123,8 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
         $this->footer = $footer;
     }
 
-  /**
-  * undocumented function
+ /**
+  * Get the current template head contents
   *
   * @return string
   */
@@ -129,8 +133,8 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
         return $this->head;
     }
 
-  /**
-  * undocumented function
+ /**
+  * Get the current template header contents
   *
   * @return string
   */
@@ -139,8 +143,8 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
         return $this->header;
     }
 
-  /**
-  * undocumented function
+ /**
+  * Get the current template body contents
   *
   * @return string
   */
@@ -149,8 +153,9 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
         return $this->body;
     }
 
-  /**
-  * undocumented function
+  
+ /**
+  * Get the current template footer contents
   *
   * @return string
   */
@@ -160,7 +165,6 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
     }
   
   /**
-  * undocumented function
   *
   * @return array<string, string|null>
   */
