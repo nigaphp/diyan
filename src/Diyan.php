@@ -14,6 +14,7 @@ namespace Nigatedev\Diyan;
 
 use Nigatedev\Diyan\DiyanNotFoundTemplate;
 use Nigatedev\Diyan\DiyanInterface;
+use Nigatedev\FrameworkBundle\Http\Request;
 use Nigatedev\FrameworkBundle\Application\App;
 
 /**
@@ -68,6 +69,23 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
   */
     private $baseView;
   
+
+ /**
+  * @var Request
+  */
+    private $request;
+  
+  /**
+   * Constructor
+   *
+   * @param Request $request
+   * @return void
+   */
+    public function __construct(Request $request)
+    {
+        $this->request = new $request;
+    }
+  
  /**
   * Overwrite template head
   *   Example the contents between the tag <head> and </head>
@@ -80,8 +98,6 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
         $this->head = $head;
     }
 
- /**
-  *
  /**
   * Overwrite template header
   *   Example the contents between the tags <header> and </header>
@@ -152,7 +168,41 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
     {
         return $this->body;
     }
-
+    
+ /**
+  * Get path (e.g "/product")
+  *
+  * @return string
+  */
+    public function getPath()
+    {
+        return $this->request->getPath();
+    }
+    
+ /**
+  * Return the generate URL
+  *
+  * @return string
+  */
+    public function generateUrl(string $route = "", array $params = [])
+    {
+        $config = App::$APP_ROOT."/config/app.json";
+        $security = json_decode(\file_get_contents($config), true);
+        $protocole = $security["security"]["http_protocol"];
+        $host = $_SERVER["HTTP_HOST"];
+       
+        $url = $protocole."://".$host.$this->request->getPath();
+        if ($route != "") {
+            $url .= "/$route";
+        }
+       
+        if (is_array($params)) {
+            if (isset($params["id"]) && is_integer($params["id"])) {
+                $url .= "/".(string)$params["id"];
+            }
+        }
+        return $url;
+    }
   
  /**
   * Get the current template footer contents
@@ -165,7 +215,8 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
     }
   
   /**
-  *
+   * Default render() params
+   *
   * @return array<string, string|null>
   */
     public function getDefaultVars()
@@ -176,6 +227,8 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
     }
   
   /**
+  * Final views render
+  *
   * @param string|null $view
   * @param mixed $params
   *
@@ -195,6 +248,8 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
     }
   
   /**
+   * Get the a single view
+   *
    * @return string|null
    */
     public function getOnlyView()
@@ -203,6 +258,8 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
     }
   
   /**
+   * Get the base view (e.g base.twig, base.diyan.php)
+   *
    * @return string
    */
     public function getBaseView()
@@ -229,6 +286,8 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
     }
 
  /**
+  * Base view setter
+  *
   * @param string $baseView
   *
   * @return self
