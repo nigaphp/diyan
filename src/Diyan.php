@@ -69,7 +69,6 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
   */
     private $baseView;
   
-
  /**
   * @var Request
   */
@@ -180,18 +179,66 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
     }
     
  /**
+  * Load JavaScript files
+  *
+  * @param string $style
+  * @return string
+  */
+    public function scriptAsset(string $script)
+    {
+        $host = $this->getHost();
+        $scriptAsset = "{$host}/build/{$script}.js";
+        return $scriptAsset;
+    }
+    
+ /**
+  * Load Css(style) files
+  *
+  * @param string $style
+  * @return string
+  */
+    public function styleAsset(string $style)
+    {
+        $host = $this->getHost();
+        $styleAsset = "{$host}/build/{$style}.css";
+        return $styleAsset;
+    }
+    
+ /**
+  * Load images
+  *
+  * @param string $image
+  * @return string
+  */
+    public function imageAsset(string $image)
+    {
+        $host = $this->getHost();
+        $imageAsset = "{$host}/images/{$image}";
+        return $imageAsset;
+    }
+    
+ /**
+  * @return string
+  */
+    public function getHost()
+    {
+        $config = App::$APP_ROOT."/config/app.json";
+        $security = json_decode(\file_get_contents($config), true);
+        $protocole = $security["security"]["http_protocol"];
+        return $protocole."://".$_SERVER["HTTP_HOST"];
+    }
+  
+ /**
   * Return the generate URL
   *
   * @return string
   */
     public function generateUrl(string $route = "", array $params = [])
     {
-        $config = App::$APP_ROOT."/config/app.json";
-        $security = json_decode(\file_get_contents($config), true);
-        $protocole = $security["security"]["http_protocol"];
-        $host = $_SERVER["HTTP_HOST"];
-       
-        $url = $protocole."://".$host.$this->request->getPath();
+        $host = $this->getHost();
+        $path = $this->request->getPath();
+        
+        $url = "{$host}{$path}";
         if ($route != "") {
             $url .= "/$route";
         }
@@ -217,8 +264,8 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
   /**
    * Default render() params
    *
-  * @return array<string, string|null>
-  */
+   * @return array<string, string|null>
+   */
     public function getDefaultVars()
     {
         return [
@@ -275,7 +322,6 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
   */
     public function setOnlyView($onlyView, $params = [])
     {
-   
         $this->onlyView = $onlyView;
         foreach ($params as $key => $value) {
             $$key = $value;
