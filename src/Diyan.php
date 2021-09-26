@@ -238,7 +238,7 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
     {
         $this->viewTitle = $view;
     
-        if (empty($this->body)) {
+        if (empty($this->getBody())) {
             $this->setOnlyView($view, $params);
         }
         $this->setBaseView("base");
