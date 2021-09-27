@@ -31,15 +31,14 @@ class DiyanNotFoundTemplate
     public function getNotFound()
     {
         $path = $_SERVER["HTTP_HOST"];
-        return <<<NFB
+        return <<<NOTFOUND
 <div class="be-container">
   <h1 class="be-color-dg">Oops 🙄 404 Not Found</h1>
   <p class="be-color-dg">Sorry this page is not found</code></p>
-  <small>Maybe try to go <a href="http://$path"?>Home?</a></small>
+  <small>Maybe try to go <a href="http://$path">Home?</a></small>
 </div>
-NFB;
+NOTFOUND;
     }
-    
     
     /**
      * Home page content if not route found

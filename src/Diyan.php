@@ -15,6 +15,7 @@ namespace Nigatedev\Diyan;
 use Nigatedev\Diyan\DiyanNotFoundTemplate;
 use Nigatedev\Diyan\DiyanInterface;
 use Nigatedev\FrameworkBundle\Http\Request;
+use Nigatedev\FrameworkBundle\Attributes\Route;
 use Nigatedev\FrameworkBundle\Application\App;
 
 /**
@@ -74,6 +75,11 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
   */
     private $request;
   
+ /**
+  * @var Route
+  */
+    private Route $route;
+  
   /**
    * Constructor
    *
@@ -82,7 +88,8 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
    */
     public function __construct(Request $request)
     {
-        $this->request = new $request;
+        
+       $this->request = new $request;
     }
   
  /**
@@ -235,20 +242,18 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
   */
     public function generateUrl(string $route = "", array $params = [])
     {
-        $host = $this->getHost();
-        $path = $this->request->getPath();
-        
-        $url = "{$host}{$path}";
-        if ($route != "") {
-            $url .= "/$route";
-        }
        
+        $host = $this->getHost();
+        $routeName = $this->request->getRouteName($route);
+        
+        $url = "{$host}{$routeName}";
+        
         if (is_array($params)) {
             if (isset($params["id"]) && is_integer($params["id"])) {
                 $url .= "/".(string)$params["id"];
             }
         }
-        return $url;
+        return str_ireplace("/{id}", "", $url);
     }
   
  /**
