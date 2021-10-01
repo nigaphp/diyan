@@ -30,7 +30,7 @@ class DiyanNotFoundTemplate
      */
     public function getNotFound()
     {
-        $path = $_SERVER["HTTP_HOST"];
+        $path = $_SERVER["HTTP_HOST"] ?? "http://localhost:8000";
         return <<<NOTFOUND
 <div class="be-container">
   <h1 class="be-color-dg">Oops 🙄 404 Not Found</h1>
@@ -49,7 +49,7 @@ NOTFOUND;
     public function getHomeNotFound()
     {
         
-        $path = $_SERVER["HTTP_HOST"];
+        $path = $_SERVER["HTTP_HOST"] ?? "http://localhost:8000";
         return <<<HOMENOTFOUND
 <div class="be-container">
   <h2 class="be-color-py">Nigatedev PHP framework for saving time</h2>

@@ -17,6 +17,7 @@ use Nigatedev\Diyan\DiyanInterface;
 use Nigatedev\FrameworkBundle\Http\Request;
 use Nigatedev\FrameworkBundle\Attributes\Route;
 use Nigatedev\FrameworkBundle\Application\App;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
 * Diyan template render
@@ -71,7 +72,7 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
     private $baseView;
   
  /**
-  * @var Request
+  * @var ServerRequestInterface
   */
     private $request;
   
@@ -86,10 +87,10 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
    * @param Request $request
    * @return void
    */
-    public function __construct(Request $request)
+    public function __construct()
     {
         
-       $this->request = new $request;
+        $this->request = Request::fromGlobals();
     }
   
  /**
@@ -232,7 +233,7 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
         $config = App::$APP_ROOT."/config/app.json";
         $security = json_decode(\file_get_contents($config), true);
         $protocole = $security["security"]["http_protocol"];
-        return $protocole."://".$_SERVER["HTTP_HOST"];
+        return $protocole."://".$this->request->getHeader("host")[0];
     }
   
  /**
