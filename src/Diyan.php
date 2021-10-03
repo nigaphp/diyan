@@ -72,25 +72,26 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
     private $baseView;
   
  /**
-  * @var ServerRequestInterface
-  */
-    private $request;
-  
- /**
   * @var Route
   */
     private Route $route;
   
   /**
-   * Constructor
-   *
-   * @param Request $request
+   * Get ServerRequest
    * @return void
    */
-    public function __construct()
+    public function getDebug()
     {
-        
-        $this->request = Request::fromGlobals();
+        return App::$app->debugger->getDebugMode();
+    }
+  
+  /**
+   * Get ServerRequest
+   * @return void
+   */
+    public function getRequest()
+    {
+        return Request::fromGlobals();
     }
   
  /**
@@ -183,7 +184,7 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
   */
     public function getPath()
     {
-        return $this->request->getPath();
+        return $this->getRequest->getPath();
     }
     
  /**
@@ -233,7 +234,7 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
         $config = App::$APP_ROOT."/config/app.json";
         $security = json_decode(\file_get_contents($config), true);
         $protocole = $security["security"]["http_protocol"];
-        return $protocole."://".$this->request->getHeader("host")[0];
+        return $protocole."://".$this->getRequest->getHeader("host")[0];
     }
   
  /**
@@ -245,7 +246,7 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
     {
        
         $host = $this->getHost();
-        $routeName = $this->request->getRouteName($route);
+        $routeName = $this->getRequest->getRouteName($route);
         
         $url = "{$host}{$routeName}";
         
