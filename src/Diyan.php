@@ -234,7 +234,7 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
         $config = App::$APP_ROOT."/config/app.json";
         $security = json_decode(\file_get_contents($config), true);
         $protocole = $security["security"]["http_protocol"];
-        return $protocole."://".$this->getRequest->getHeader("host")[0];
+        return $protocole."://".$this->getRequest()->getHeader("host")[0];
     }
   
  /**
