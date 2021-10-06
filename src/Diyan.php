@@ -28,6 +28,11 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
 {
 
   /**
+  * @var ServerRequestInterface
+  */
+    private $request;
+    
+  /**
   * @var string
   */
     private $head;
@@ -75,7 +80,14 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
   * @var Route
   */
     private Route $route;
-  
+    
+    /**
+     * @param ServerRequestInterface $request
+     */
+    public function __construct(ServerRequestInterface $request)
+    {
+        $this->request = $request;
+    }
   /**
    * Get ServerRequest
    * @return void
@@ -91,7 +103,7 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
    */
     public function getRequest()
     {
-        return Request::fromGlobals();
+        return $this->request;
     }
   
  /**
