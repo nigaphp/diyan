@@ -1,16 +1,16 @@
 <?php
 /*
- * This file is part of the Nigatedev framework package.
+ * This file is part of the Niga framework package.
  *
- * (c) Abass Ben Cheik <abass@todaydevs.com>
+ * (c) Abass Ben <abass@abassdev.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
-namespace Nigatedev\Diyan;
+namespace Niga\Diyan;
 
 interface DiyanInterface
 {
@@ -19,31 +19,31 @@ interface DiyanInterface
    *
    * @return void
    */
-    public function render($view);
-  
+  public function render($view);
+
   /**
    * @param string $baseView
    *
    * @return self
    */
-    public function setBaseView($baseView);
-   
+  public function setBaseView($baseView);
+
   /**
    * @return string
    */
-    public function getBaseView();
-   
+  public function getBaseView();
+
   /**
    * @param string $onlyView
    * @param mixed $params
    *
    * @return mixed
    */
-    public function setOnlyView($onlyView, $params = []);
-   
-   
+  public function setOnlyView($onlyView, $params = []);
+
+
   /**
    * @return string
    */
-    public function getOnlyView();
+  public function getOnlyView();
 }

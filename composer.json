@@ -1,19 +1,25 @@
 {
-    "name": "nigatedev/diyan",
-    "description": "The Nigatedev PHP framework template engine",
-    "type": "library",
-    "license": "MIT",
-    "keywords": ["framework", "nigatedev", "diyan"],
-    "autoload": {
-        "psr-4": {
-            "Nigatedev\\Diyan\\": "src/"
-        }
-    },
-    "authors": [
-        {
-            "name": "Abass Ben Cheik",
-            "email": "cheikabassben@gmail.com"
-        }
-    ],
-    "require": {}
+  "name": "niga/diyan",
+  "description": "Niga framework template engine",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "framework",
+    "niga",
+    "diyan"
+  ],
+  "autoload": {
+    "psr-4": {
+      "Niga\\Diyan\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Abass Dev",
+      "email": "abass@abassdev.com",
+      "role": "Lead developer",
+      "homepage": "https://abassdev.com"
+    }
+  ],
+  "require": {}
 }
