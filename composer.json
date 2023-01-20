@@ -21,7 +21,9 @@
       "homepage": "https://abassdev.com"
     }
   ],
+  "minimum-stability": "dev",
   "require": {
+    "niga/console": "2.x-dev"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.5"
