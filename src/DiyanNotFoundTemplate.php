@@ -2,7 +2,7 @@
 /*
  * This file is part of the Niga framework package.
  *
- * (c) Abass Ben <abass@abassdev.com>
+ * (c) Abass Dev <abass@abassdev.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -15,7 +15,7 @@ namespace Niga\Diyan;
 /**
  * NotFound Template
  *
- * @author Abass Ben <abass@abassdev.com>
+ * @author Abass Dev <abass@abassdev.com>
  */
 class DiyanNotFoundTemplate
 {

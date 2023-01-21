@@ -2,7 +2,7 @@
 /*
  * This file is part of the Niga framework package.
  *
- * (c) Abass Ben <abass@abassdev.com>
+ * (c) Abass Dev <abass@abassdev.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -21,7 +21,7 @@ use Psr\Http\Message\ServerRequestInterface;
 /**
  * Diyan template render
  *
- * @author Abass Ben <abass@abassdev.com>
+ * @author Abass Dev <abass@abassdev.com>
  */
 class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
 {
@@ -253,21 +253,21 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
    *
    * @return string
    */
-  public function generateUrl(string $route = "", array $params = [])
-  {
+  // public function generateUrl(string $route = "", array $params = [])
+  // {
 
-    $host = $this->getHost();
-    $routeName = $this->request->getRouteName($route);
+  //   $host = $this->getHost();
+  //   $routeName = $this->request->getRouteName($route);
 
-    $url = "{$host}{$routeName}";
+  //   $url = "{$host}{$routeName}";
 
-    if (is_array($params)) {
-      if (isset($params["id"]) && is_integer($params["id"])) {
-        $url .= "/" . (string)$params["id"];
-      }
-    }
-    return str_ireplace("/{id}", "", $url);
-  }
+  //   if (is_array($params)) {
+  //     if (isset($params["id"]) && is_integer($params["id"])) {
+  //       $url .= "/" . (string)$params["id"];
+  //     }
+  //   }
+  //   return str_ireplace("/{id}", "", $url);
+  // }
 
   /**
    * Get the current template footer contents
