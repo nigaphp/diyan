@@ -1,0 +1,7 @@
+<phpunit colors="true" verbose="true" testdox="true">
+  <testsuites>
+    <testsuite name="diyan">
+      <directory>tests</directory>
+    </testsuite>
+  </testsuites>
+</phpunit>
