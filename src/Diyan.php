@@ -340,6 +340,17 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
    */
   public function setOnlyView($onlyView, $params = [])
   {
+    if ($onlyView === 'errors/_404' && !file_exists(APP::$APP_ROOT . "/views/errors/_404.php")) {
+      
+    $this->onlyView = $onlyView;
+    foreach ($params as $key => $value) {
+      $$key = $value;
+    }
+    ob_start();
+    require_once dirname(__DIR__) . "/src/views/errors/_404.php";
+    $this->onlyView = (string)ob_get_clean();
+   
+    } else {
     $this->onlyView = $onlyView;
     foreach ($params as $key => $value) {
       $$key = $value;
@@ -347,6 +358,7 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
     ob_start();
     require_once APP::$APP_ROOT . "/views/{$this->onlyView}.php";
     $this->onlyView = (string)ob_get_clean();
+    }
   }
 
   /**
@@ -358,10 +370,20 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
    */
   public function setBaseView($baseView = "base"): self
   {
+     if ($baseView === 'base' && !file_exists(APP::$APP_ROOT . "/views/base.php")) {
+         
+    $this->baseView = $baseView;
+   
+    ob_start();
+    require_once dirname(__DIR__) . "/src/views/base.php";
+    $this->baseView = (string)ob_get_clean();
+   return $this;
+    }  else {
     $this->baseView = $baseView;
     ob_start();
     require_once App::$APP_ROOT . "/views/{$this->baseView}.php";
     $this->baseView = (string)ob_get_clean();
     return $this;
+    }
   }
 }
