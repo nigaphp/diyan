@@ -2,7 +2,7 @@
 /*
  * This file is part of the Niga framework package.
  *
- * (c) Abass Dev <abass@abassdev.com>
+ * (c) Abass Ben <abass@abassdev.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -21,7 +21,7 @@ use Psr\Http\Message\ServerRequestInterface;
 /**
  * Diyan template render
  *
- * @author Abass Dev <abass@abassdev.com>
+ * @author Abass Ben <abass@abassdev.com>
  */
 class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
 {
@@ -98,7 +98,7 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
 
   /**
    * Get ServerRequest
-   * @return ServerRequestInterface
+   * @return void
    */
   public function getRequest()
   {
@@ -195,7 +195,7 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
    */
   public function getPath()
   {
-    return $this->getRequest();
+    return $this->request->getHost;
   }
 
   /**
@@ -242,8 +242,9 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
    */
   public function getHost()
   {
-    $config = App::$APP_ROOT . "/config/app.json";
-    $security = json_decode(\file_get_contents($config), true);
+    $configFile = php_sapi_name() === 'cli' ? "./config/app.json" : APP::$APP_ROOT . "/config/app.json";
+
+    $security = json_decode(\file_get_contents($configFile), true);
     $protocole = $security["security"]["http_protocol"];
     return $protocole . "://" . $this->request->getHeader("host")[0];
   }
@@ -253,21 +254,21 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
    *
    * @return string
    */
-  // public function generateUrl(string $route = "", array $params = [])
-  // {
+  /**public function generateUrl(string $route = "", array $params = [])
+  {
 
-  //   $host = $this->getHost();
-  //   $routeName = $this->request->getRouteName($route);
+    $host = $this->getHost();
+    $routeName = $this->request->getRouteName($route);
 
-  //   $url = "{$host}{$routeName}";
+    $url = "{$host}{$routeName}";
 
-  //   if (is_array($params)) {
-  //     if (isset($params["id"]) && is_integer($params["id"])) {
-  //       $url .= "/" . (string)$params["id"];
-  //     }
-  //   }
-  //   return str_ireplace("/{id}", "", $url);
-  // }
+    if (is_array($params)) {
+      if (isset($params["id"]) && is_integer($params["id"])) {
+        $url .= "/" . (string)$params["id"];
+      }
+    }
+    return str_ireplace("/{id}", "", $url);
+  }*/
 
   /**
    * Get the current template footer contents
@@ -308,6 +309,7 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
     }
     $this->setBaseView("base");
 
+    $params = array_merge($this->getDefaultVars(), $params);
     return str_replace("{{body}}", $this->getOnlyView(), $this->getBaseView());
   }
 
@@ -322,7 +324,7 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
   }
 
   /**
-   * Get the base view. e.g [base.twig, base.php]
+   * Get the base view (e.g base.twig, base.diyan.php)
    *
    * @return string
    */
@@ -339,13 +341,25 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
    */
   public function setOnlyView($onlyView, $params = [])
   {
+    if ($onlyView === 'errors/_404' && !file_exists(APP::$APP_ROOT . "/views/errors/_404.php")) {
+      
     $this->onlyView = $onlyView;
     foreach ($params as $key => $value) {
       $$key = $value;
     }
     ob_start();
-    require_once APP::$APP_ROOT . "/views/{$this->onlyView}.php";
+    require_once dirname(__DIR__) . "/views/errors/_404.php";
     $this->onlyView = (string)ob_get_clean();
+   
+    } else {
+    $this->onlyView = $onlyView;
+    foreach ($params as $key => $value) {
+      $$key = $value;
+    }
+    ob_start();
+    require_once php_sapi_name() == 'cli' ? "./views/{$this->onlyView}.php" : APP::$APP_ROOT .  "/views/{$this->onlyView}.php";
+    $this->onlyView = (string)ob_get_clean();
+    }
   }
 
   /**
@@ -357,10 +371,20 @@ class Diyan extends DiyanNotFoundTemplate implements DiyanInterface
    */
   public function setBaseView($baseView = "base"): self
   {
+     if ($baseView === 'base' && !file_exists(APP::$APP_ROOT . "/views/base.php")) {
+         
+    $this->baseView = $baseView;
+   
+    ob_start();
+    require_once dirname(__DIR__) . "/views/base.php";
+    $this->baseView = (string)ob_get_clean();
+   return $this;
+    }  else {
     $this->baseView = $baseView;
     ob_start();
     require_once App::$APP_ROOT . "/views/{$this->baseView}.php";
     $this->baseView = (string)ob_get_clean();
     return $this;
+    }
   }
 }
